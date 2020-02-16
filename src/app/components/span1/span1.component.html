@@ -1,0 +1,184 @@
+<div>
+  <div class="left-contents">
+    <div>
+      <img src="../../assets/img/span1.png" width="100%" height="100%" />
+    </div>
+
+    <div>
+      <fieldset>
+        <legend> AIの予測結果</legend>
+        <table>
+          <tr>
+            <th>部材</th>
+            <th>部材厚の予測値</th>
+          </tr>
+          <tr>
+            <td>上床版</td>
+            <td>{{input.thickness_of_top_slab}}</td>
+          </tr>
+          <tr>
+            <td>側壁</td>
+            <td>{{input.thickness_of_wall}}</td>
+          </tr>
+          <tr>
+            <td>下床版</td>
+            <td>{{input.thickness_of_bottom_slab}}</td>
+          </tr>
+        </table>
+      </fieldset>
+    </div>
+
+  </div>
+
+  <div class="right-contents">
+    <h3>設計条件</h3>
+
+    <div class="right-left-contents">
+      <div>
+        <label for="name">交差する線路の数</label>
+        <input
+          id="intended_use_of_box_culvert"
+          name="intended_use_of_box_culvert"
+          type="number"
+          [(ngModel)]="input.number_of_rail"
+        />
+      </div>
+
+      <div>
+        <fieldset>
+          <legend>ボックス内部の用途</legend>
+          <input
+            id="intended_use_of_box_culvert"
+            name="intended_use_of_box_culvert"
+            type="number"
+            [(ngModel)]="input.intended_use_of_box_culvert"
+          />
+          <table>
+            <tr>
+              <th>値</th>
+              <th>意味</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>道路（車道・歩道）</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>道路（車道）</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>河川</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>道路（管理）</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>道路（歩道）</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>水路</td>
+            </tr>
+          </table>
+        </fieldset>
+      </div>
+
+      <div>
+        <fieldset>
+          <legend>部材の構造形式</legend>
+          <div>
+            <label for="name">上床版の構造</label>
+            <input
+              id="structural_type_of_top_slab"
+              name="structural_type_of_top_slab"
+              type="number"
+              [(ngModel)]="input.structural_type_of_top_slab"
+            />
+          </div>
+          <div>
+            <label for="name">下床版の構造</label>
+            <input
+              id="structural_type_of_bottom_slab"
+              name="structural_type_of_bottom_slab"
+              type="number"
+              [(ngModel)]="input.structural_type_of_bottom_slab"
+            />
+          </div>
+          <div>
+            <label for="name">側壁の構造</label>
+            <input
+              id="structural_type_of_wall"
+              name="structural_type_of_wall"
+              type="number"
+              [(ngModel)]="input.structural_type_of_wall"
+            />
+          </div>
+          <table>
+            <tr>
+              <th>値</th>
+              <th>意味</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>RC</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>SRC</td>
+            </tr>
+          </table>
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="right-right-contents">
+      <div>
+        <label for="name">内空幅</label>
+        <input id="span2" name="span2" type="number" [(ngModel)]="input.span2" />
+      </div>
+
+      <div>
+        <label for="name">内空高</label>
+        <input id="raise2" name="raise2" type="raise2" [(ngModel)]="input.raise2" />
+      </div>
+
+      <div>
+        <label for="name">設計土被り</label>
+        <input
+          id="covering_depth"
+          name="covering_depth"
+          type="covering_depth"
+          [(ngModel)]="input.covering_depth"
+        />
+      </div>
+
+      <div>
+        <label for="name">斜角</label>
+        <input id="bevel" name="bevel" type="bevel" [(ngModel)]="input.bevel" />
+      </div>
+
+      <div>
+        <label for="name">上床版と側壁のハンチ</label>
+        <input
+          id="haunch_of_top_slab_and_wall"
+          name="haunch_of_top_slab_and_wall"
+          type="haunch_of_top_slab_and_wall"
+          [(ngModel)]="input.haunch_of_top_slab_and_wall"
+        />
+      </div>
+
+      <div>
+        <label for="name">下床版と側壁のハンチ</label>
+        <input
+          id="haunch_of_bottom_slab_and_wall"
+          name="haunch_of_bottom_slab_and_wall"
+          type="haunch_of_bottom_slab_and_wall"
+          [(ngModel)]="input.haunch_of_bottom_slab_and_wall"
+        />
+      </div>
+    </div>
+  </div>
+</div>

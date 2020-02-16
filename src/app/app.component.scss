@@ -1,0 +1,48 @@
+$border-color: #428bca; // ボーダーライン
+
+h1 {
+  font-size: 20px;
+  color: black;
+}
+
+.header {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 5px;
+  z-index: 10;
+
+  .container {
+    margin-left: 15px;
+    max-width: 100%;
+  }
+
+  .liner {
+    align-items: left;
+    display: flex;
+  }
+
+  .title-and-menu {
+    border-bottom: 1px solid $border-color;
+    padding: 0;
+    margin-left: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex: 1 0 auto;
+  }
+
+  img {
+    width: 3rem;
+    margin-right: 1rem;
+  }
+}
+
+.container {
+  margin-left: 15px;
+}
+
+.router-container {
+  margin-top: 20px;
+  padding-left: 30px;
+  height: 100%;
+}
