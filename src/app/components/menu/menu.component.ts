@@ -110,7 +110,7 @@ export class MenuComponent implements OnInit {
 
     console.log(inputJson);
 
-    const url = 'http://structuralengine.com/BoxAI/api/Web_Api.py';
+    const url = 'https://structuralengine.com/BoxAI/api/Web_Api.py';
 
     this.http.post(url, inputJson, {
       headers: new Headers({
