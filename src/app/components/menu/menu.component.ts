@@ -67,32 +67,39 @@ export class MenuComponent implements OnInit {
   }
 
 
-
   // 計算
-  public async calcrate(): Promise<void>  {
-/*
-    if (this.user.loggedIn === false) {
-      this.logIn();
-    }
-    if (this.user.loggedIn === false) {
-      return;
-    }
-*/
+  public async calcrate(): Promise<void> {
+    /*
+        if (this.user.loggedIn === false) {
+          this.logIn();
+        }
+        if (this.user.loggedIn === false) {
+          return;
+        }
+    */
 
-  const MODEL_PATH = 'assets/jsmodel/model.json';
-  const model = await tf.loadLayersModel(MODEL_PATH);
-  console.log(model.summary());
+    // モデルを読み込む
+    const MODEL_PATH = 'assets/jsmodel/model.json';
+    const model = await tf.loadLayersModel(MODEL_PATH);
+    console.log(model.summary());
 
-  const data = this.input.getInputArray();
-  const inputs = tf.tensor(data).reshape([1,data.length,1]); // テンソルに変換
-  const output = model.predict(inputs) as any;
-  let predictions = Array.from(output.dataSync());
-  console.log(predictions);
+    // インプットされているデータを取得する
+    const data = this.input.getInputArray();
 
-  this.input.loadResultData(predictions);
+    // インプットされているデータをテンソルに変換する
+    const inputs = tf.tensor(data).reshape([1, data.length, 1]); 
 
-  this.app.isCalculated = true;
+    // AI に推論させる
+    const output = model.predict(inputs) as any;
+    let predictions = Array.from(output.dataSync());
+    console.log(predictions);
+
+    // 推論させたデータを表示する
+    this.input.loadResultData(predictions);
+
+    // 完了フラグ
+    this.app.isCalculated = true;
   }
 
-  
+
 }
