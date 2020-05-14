@@ -36,7 +36,7 @@ export class InputDataService {
 
   constructor() {
 
-    this.number_of_rail =  1;
+    this.number_of_rail = 1;
     this.intended_use_of_box_culvert = 1;
     this.number_of_spans = 1;
     this.structural_type_of_top_slab = 1;
@@ -65,8 +65,34 @@ export class InputDataService {
     this.thickness_of_middle_wall2 = '';
   }
 
+  public getInputArray(): number[][] {
+    const result = [
+      [this.number_of_rail],
+      [this.intended_use_of_box_culvert],
+      [this.number_of_spans],
+      [this.structural_type_of_top_slab],
+      [this.structural_type_of_bottom_slab],
+      [this.structural_type_of_wall],
+      [this.structural_type_of_middle_wall],
+      [this.span1],
+      [this.span2],
+      [this.span3],
+      [this.span4],
+      [this.raise1],
+      [this.raise2],
+      [this.raise3],
+      [this.raise4],
+      [this.covering_depth],
+      [this.bevel],
+      [this.haunch_of_top_slab_and_wall],
+      [this.haunch_of_bottom_slab_and_wall],
+      [this.haunch_of_top_slab_and_middle_wall],
+      [this.haunch_of_bottom_slab_and_middle_wall]
+    ];
+    return result;
+  }
 
-  public getInputText(loginUserName: string, loginPassword: string ): string {
+  public getInputText(loginUserName: string, loginPassword: string): string {
 
     const data = {
       'Number of rail': [this.number_of_rail],
@@ -99,26 +125,21 @@ export class InputDataService {
   }
 
 
-    // 計算結果を読み込む 
-    public loadResultData(resultText: string): boolean {
+  // 計算結果を読み込む 
+  public loadResultData(result: unknown[]): boolean {
 
-      const pos = resultText.lastIndexOf('}');
-      resultText = resultText.substring(0, pos) + '}';
+    try {
+      this.thickness_of_top_slab = result[0];     // ['thickness of top slab'];
+      this.thickness_of_bottom_slab = result[1];  // ['thickness of bottom slab'];
+      this.thickness_of_wall = result[2];         // ['thickness of wall'];
+      this.thickness_of_middle_wall1 = result[3]; // ['thickness of middle wall1'];
+      this.thickness_of_middle_wall2 = result[4]; // ['thickness of middle wall2'];
 
-      try {
-        const result = JSON.parse(resultText);
-
-        this.thickness_of_top_slab = result['thickness of top slab'][0];
-        this.thickness_of_bottom_slab = result['thickness of bottom slab'][0];
-        this.thickness_of_wall = result['thickness of wall'][0];
-        this.thickness_of_middle_wall1 = result['thickness of middle wall1'][0];
-        this.thickness_of_middle_wall2 = result['thickness of middle wall2'][0];
-
-      } catch (e) {
-        return false;
-      }
-      return true;
+    } catch (e) {
+      return false;
     }
+    return true;
+  }
 
 
   /// <summary>

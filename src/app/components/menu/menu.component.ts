@@ -14,6 +14,8 @@ import { ConfigService } from '../../providers/config.service';
 
 import { InputDataService } from '../../providers/input-data.service';
 
+import * as tf from '@tensorflow/tfjs';
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -64,37 +66,10 @@ export class MenuComponent implements OnInit {
     document.getElementById('user_name_id').focus();
   }
 
-  // ユーザーポイントを更新
-  private setUserPoint() {
-    const url = 'https://structuralengine.com/my-module/get_points_balance.php?id=' 
-              + this.user.loginUserName + '&ps=' + this.user.loginPassword;
-    this.http.get(url, {
-      headers: new Headers({
-        'Content-Type': 'application/x-www-form-urlencoded'
-      })
-    })
-      .subscribe(
-        response => {
-          // 通信成功時の処理（成功コールバック）
-          const response_text = JSON.parse(response.text());
-          if ('error' in response_text) {
-            this.user.errorMessage = response_text.error;
-          } else {
-            this.user.user_id = response_text.user_id;
-            this.user.purchase_value = response_text.purchase_value;
-            this.user.loggedIn = true;
-            this.userPoint = this.user.purchase_value.toString();
-          }
-        },
-        error => {
-          // 通信失敗時の処理（失敗コールバック）
-          this.user.errorMessage = error.statusText;
-        }
-      );
-  }
+
 
   // 計算
-  calcrate(): void {
+  public async calcrate(): Promise<void>  {
 /*
     if (this.user.loggedIn === false) {
       this.logIn();
@@ -103,48 +78,21 @@ export class MenuComponent implements OnInit {
       return;
     }
 */
-    const modalRef = this.modalService.open(WaitDialogComponent);
 
-    const inputJson = 'inp_grid='
-      + this.input.getInputText( this.user.loginUserName, this.user.loginPassword );
+  const MODEL_PATH = 'assets/jsmodel/model.json';
+  const model = await tf.loadLayersModel(MODEL_PATH);
+  console.log(model.summary());
 
-    console.log(inputJson);
+  const data = this.input.getInputArray();
+  const inputs = tf.tensor(data).reshape([1,data.length,1]); // テンソルに変換
+  const output = model.predict(inputs) as any;
+  let predictions = Array.from(output.dataSync());
+  console.log(predictions);
 
-    const url = 'https://structuralengine.com/BoxAI/api/Web_Api.py';
+  this.input.loadResultData(predictions);
 
-    this.http.post(url, inputJson, {
-      headers: new Headers({
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json'
-      })
-    }).subscribe(
-      response => {
-        // 通信成功時の処理（成功コールバック）
-        console.log('通信成功!!');
-        console.log(response.text());
-
-        if (!this.input.loadResultData(response.text())) {
-          alert(response.text());
-        } else {
-          this.loadResultData(response.text());
-          this.app.isCalculated = true;
-        }
-
-        modalRef.close();
-      },
-      error => {
-        // 通信失敗時の処理（失敗コールバック）
-        this.app.isCalculated = false;
-        console.log(error.statusText);
-        modalRef.close();
-      }
-    );
+  this.app.isCalculated = true;
   }
 
-
-  private loadResultData(resultText: string): void {
-    this.user.loadResultData(resultText);
-    this.userPoint = this.user.purchase_value.toString();
-  }
   
 }
