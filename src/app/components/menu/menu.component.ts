@@ -88,14 +88,14 @@ export class MenuComponent implements OnInit {
 
     //正規化処理
     let data_normal = [];
-    const maxValue = [10, 6, 4, 2, 2, 2, 2, 14.117, 18, 11.25, 11.95, 7.57, 7.57, 6.9, 7.57
-                        , 6.606, 93.47583, 700, 700, 1200, 1200];
-    const minValue = [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                        , 0, 30.00833, 0, 0, 0, 0];
+
+      //最大値と最小値の入力（条件）
+    const maxValue = [10, 6, 4, 2, 2, 2, 2.0, 14.117, 18.0, 11.25, 11.95, 7.57, 7.57, 6.9, 7.57, 6.606, 93.47583333, 700.0, 700.0, 1200.0, 1200.0];
+    const minValue = [ 1, 1, 1, 1, 1, 1, 0.0,  0.0  ,  0.0,  0.0 ,  0.0 , 0.0 , 0.0 , 0.0, 0.0 , 0.0  , 30.00833333,   0.0,   0.0,    0.0,    0.0];
     
     for (let i = 0; i < data.length; i++){
       data_normal.push((data[i] - minValue[i]) / (maxValue[i] - minValue[i]));
-     }
+    }
 
 
     // インプットされているデータをテンソルに変換する
@@ -109,8 +109,9 @@ export class MenuComponent implements OnInit {
 
     // 答え(predictions) は正規化を元に戻す
     const predictions = [];
-    const maxValue1 = [2000, 1900, 1900, 1100, 600];
-    const minValue1 = [ 130,  130,  130,    0,   0];
+      //最大値と最小値の入力（予測値）
+    const maxValue1 = [2000, 1900, 1900, 1100.0, 600.0];
+    const minValue1 = [ 130,  130,  130,    0.0,   0.0];
     
     for (let i = 0; i < predictions_normal.length; i++){
       const a: number = this.input.toNumber(predictions_normal[i]);
