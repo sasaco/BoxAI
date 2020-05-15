@@ -121,6 +121,9 @@ export class MenuComponent implements OnInit {
     // 推論させたデータを表示する
     this.input.loadResultData(predictions);
 
+    // アラート
+    alert('予測結果がでました');
+
     // 完了フラグ
     this.app.isCalculated = true;
   }
