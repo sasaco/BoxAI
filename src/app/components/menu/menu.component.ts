@@ -87,7 +87,8 @@ export class MenuComponent implements OnInit {
     const data = this.input.getInputArray();
 
     // インプットされているデータをテンソルに変換する
-    const inputs = tf.tensor(data).reshape([1, data.length, 1]); 
+    //const inputs = tf.cast(data, "float32");
+    const inputs = tf.tensor(data).reshape([1, data.length]); 
 
     // AI に推論させる
     const output = model.predict(inputs) as any;

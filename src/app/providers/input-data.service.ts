@@ -65,29 +65,29 @@ export class InputDataService {
     this.thickness_of_middle_wall2 = '';
   }
 
-  public getInputArray(): number[][] {
+  public getInputArray(): number[] {
     const result = [
-      [this.number_of_rail],
-      [this.intended_use_of_box_culvert],
-      [this.number_of_spans],
-      [this.structural_type_of_top_slab],
-      [this.structural_type_of_bottom_slab],
-      [this.structural_type_of_wall],
-      [this.structural_type_of_middle_wall],
-      [this.span1],
-      [this.span2],
-      [this.span3],
-      [this.span4],
-      [this.raise1],
-      [this.raise2],
-      [this.raise3],
-      [this.raise4],
-      [this.covering_depth],
-      [this.bevel],
-      [this.haunch_of_top_slab_and_wall],
-      [this.haunch_of_bottom_slab_and_wall],
-      [this.haunch_of_top_slab_and_middle_wall],
-      [this.haunch_of_bottom_slab_and_middle_wall]
+      this.number_of_rail,
+      this.intended_use_of_box_culvert,
+      this.number_of_spans,
+      this.structural_type_of_top_slab,
+      this.structural_type_of_bottom_slab,
+      this.structural_type_of_wall,
+      this.structural_type_of_middle_wall,
+      this.span1,
+      this.span2,
+      this.span3,
+      this.span4,
+      this.raise1,
+      this.raise2,
+      this.raise3,
+      this.raise4,
+      this.covering_depth,
+      this.bevel,
+      this.haunch_of_top_slab_and_wall,
+      this.haunch_of_bottom_slab_and_wall,
+      this.haunch_of_top_slab_and_middle_wall,
+      this.haunch_of_bottom_slab_and_middle_wall
     ];
     return result;
   }
