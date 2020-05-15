@@ -86,15 +86,37 @@ export class MenuComponent implements OnInit {
     // インプットされているデータを取得する
     const data = this.input.getInputArray();
 
+    //正規化処理
+    let data_normal = [];
+    const maxValue = [10, 6, 4, 2, 2, 2, 2, 14.117, 18, 11.25, 11.95, 7.57, 7.57, 6.9, 7.57
+                        , 6.606, 93.47583, 700, 700, 1200, 1200];
+    const minValue = [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                        , 0, 30.00833, 0, 0, 0, 0];
+    
+    for (let i = 0; i < data.length; i++){
+      data_normal.push((data[i] - minValue[i]) / (maxValue[i] - minValue[i]));
+     }
+
+
     // インプットされているデータをテンソルに変換する
     //const inputs = tf.cast(data, "float32");
-    const inputs = tf.tensor(data).reshape([1, data.length]); 
+    const inputs = tf.tensor(data_normal).reshape([1, data_normal.length]); 
 
     // AI に推論させる
     const output = model.predict(inputs) as any;
-    let predictions = Array.from(output.dataSync());
-    console.log(predictions);
+    let predictions_normal = Array.from(output.dataSync());
+    console.log(predictions_normal);
 
+    // 答え(predictions) は正規化を元に戻す
+    const predictions = [];
+    const maxValue1 = [2000, 1900, 1900, 1100, 600];
+    const minValue1 = [ 130,  130,  130,    0,   0];
+    
+    for (let i = 0; i < predictions_normal.length; i++){
+      const a: number = this.input.toNumber(predictions_normal[i]);
+      predictions.push((maxValue1[i] - minValue1[i]) * a + minValue1[i]);
+    }
+    
     // 推論させたデータを表示する
     this.input.loadResultData(predictions);
 

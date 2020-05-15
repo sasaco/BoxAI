@@ -126,7 +126,7 @@ export class InputDataService {
 
 
   // 計算結果を読み込む 
-  public loadResultData(result: unknown[]): boolean {
+  public loadResultData(result: number[]): boolean {
 
     try {
       this.thickness_of_top_slab = result[0];     // ['thickness of top slab'];
