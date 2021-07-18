@@ -107,21 +107,6 @@
     </div>
   </div>
 </div>
-<div class="container">
-  <div class="btn-group">
-    <nav>
-      <a routerLink="./span1" (click)="activePageChenge(0)" routerLinkActive="selected-item"
-        class="btn btn-outline-primary" id="0">1径間</a>
-      <a routerLink="./span2" (click)="activePageChenge(1)" routerLinkActive="selected-item"
-        class="btn btn-outline-primary" id="1">2径間</a>
-      <a routerLink="./span3" (click)="activePageChenge(2)" routerLinkActive="selected-item"
-        class="btn btn-outline-primary" id="2">3径間</a>
-      <a routerLink="./span4" (click)="activePageChenge(3)" routerLinkActive="selected-item"
-        class="btn btn-outline-primary" id="3">4径間</a>
-    </nav>
-  </div>
-</div>
-
 <div class="router-container">
   <router-outlet (activate)="onActivate($event)" (deactivate)="onDeactivate($event)"></router-outlet>
 </div>
