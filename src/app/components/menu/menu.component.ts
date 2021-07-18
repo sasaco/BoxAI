@@ -88,13 +88,38 @@ export class MenuComponent implements OnInit {
 
     //正規化処理
     let data_normal = [];
+    //最大値と最小値の入力（条件）
 
-      //最大値と最小値の入力（条件）
-    const maxValue = [10, 6, 4, 2, 2, 2, 2.0, 14.117, 18.0, 11.25, 11.95, 7.57, 7.57, 6.9, 7.57, 6.606, 93.47583333, 700.0, 700.0, 1200.0, 1200.0];
-    const minValue = [ 1, 1, 1, 1, 1, 1, 0.0,  0.0  ,  0.0,  0.0 ,  0.0 , 0.0 , 0.0 , 0.0, 0.0 , 0.0  , 30.00833333,   0.0,   0.0,    0.0,    0.0];
-    
+    const input_data_header = [
+      ['result_max', 3],
+      ['Df', 10000],
+      ['b0', 20000],
+      ['h0', 20000],
+      ['fck', 80],
+      ['fsyk', 490],
+      ['fwyk', 490],
+      ['condition', 3],
+      ['coverSoilWeight', 20],
+      ['surfaceLoad', 500],
+      ['highWaterDepth', 26000],
+      ['lowWaterDepth', 26000],
+      ['temperature', 35],
+
+      ['h', 26000], ['type', 1], ['r', 20], ['rw', 10], ['E0', 51000], ['Ko', 0.8],
+    ]
+    const output_data_header = [
+      ['tw1', 5000],
+      ['tu1', 5000],
+      ['tb1', 5000],
+      ['a1', 4000],
+      ['b1', 4000],
+      ['d1', 4000],
+      ['c1', 4000],
+    ]
+
+
     for (let i = 0; i < data.length; i++){
-      data_normal.push((data[i] - minValue[i]) / (maxValue[i] - minValue[i]));
+      data_normal.push(data[i] / maxValue[i]);
     }
 
 
