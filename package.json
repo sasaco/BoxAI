@@ -19,6 +19,7 @@
     "@angular/platform-browser": "~11.2.6",
     "@angular/platform-browser-dynamic": "~11.2.6",
     "@angular/router": "~11.2.6",
+    "@tensorflow/tfjs": "^3.8.0",
     "@three-ts/orbit-controls": "^1.4.7",
     "@types/three": "^0.130.0",
     "rxjs": "~6.6.0",
