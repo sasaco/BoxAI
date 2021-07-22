@@ -65,7 +65,7 @@ export class SceneService {
 
   // 床面を生成する
   private createHelper() {
-    this.GridHelper = new THREE.GridHelper(200, 20);
+    this.GridHelper = new THREE.GridHelper(20, 20);
     this.GridHelper.geometry.rotateX(Math.PI / 2);
     this.scene.add(this.GridHelper);
   }
@@ -90,8 +90,8 @@ export class SceneService {
       this.scene.remove(this.camera);
     }
     this.camera = new THREE.OrthographicCamera(
-      -Width/10, Width/10,
-      Height/10, -Height/10,
+      -Width/80, Width/80,
+      Height/80, -Height/80,
       0.1,
       21
     );
@@ -188,11 +188,19 @@ export class SceneService {
   ///////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////
+  private GL = 5; // GL の線 GL は y=50 の位置とする
+  private hmesh: THREE.Mesh = null;
+  private gound0: THREE.Mesh = null;
+  private gound1: THREE.Mesh = null;
+  private gound2: THREE.Mesh = null;
+  private gound3: THREE.Mesh = null;
+  private body1: THREE.Mesh = null;
+  private body2: THREE.Mesh = null;
+
   public initialize(): void{
-    // GL の線 GL は y=50 の位置とする
     const points = [
-      new THREE.Vector3( -100, 50, 0 ),
-      new THREE.Vector3( 100, 50, 0 ) 
+      new THREE.Vector3( -100, this.GL, 0 ),
+      new THREE.Vector3( 100, this.GL, 0 ) 
     ];
     const material = new THREE.LineBasicMaterial({
       color: 0x0000ff
@@ -205,7 +213,7 @@ export class SceneService {
     var texture = new THREE.TextureLoader().load('./assets/img/t25.png',
     (tex) => { // 読み込み完了時
         // 縦横比を保って適当にリサイズ
-        const w = 25;
+        const w = 5;
         const h = tex.image.height/(tex.image.width/w);
 
         // 平面
@@ -213,7 +221,7 @@ export class SceneService {
         const material = new THREE.MeshPhongMaterial( { map:texture } );
         const plane = new THREE.Mesh( geometry, material );
         plane.scale.set(w, h, 1);
-        plane.position.y = 50 + h/2;
+        plane.position.y = this.GL + h/2;
         plane.position.z = -1;
         this.scene.add( plane );
 
@@ -221,10 +229,10 @@ export class SceneService {
         const myText = new Text();
         this.scene.add(myText);
         myText.text = 'T-25';
-        myText.fontSize = 5;
+        myText.fontSize = 0.7;
         myText.position.z = 0;
         myText.color = 0x000000;
-        myText.position.y = 50 + h;
+        myText.position.y = this.GL + h;
         myText.sync();
         setTimeout(() => {
           this.render();
@@ -236,36 +244,39 @@ export class SceneService {
   }
   public changeData(): void {
 
-    const Df = this.result.Df;
-    const b0 = this.result.b0;
-    const h0 = this.result.h0;
+    const Df = this.result.Df/1000;
+    const b0 = this.result.b0/1000;
+    const h0 = this.result.h0/1000;
 
     // 内空の作成 ---------------------------------------------------------
-    const hillShape = new THREE.Shape();
-    const L = 8, H = 2;
-    hillShape.moveTo( -b0/2, 50-Df );
-    hillShape.lineTo( b0/2, 50-Df );
-    hillShape.lineTo( b0/2, 50-Df-h0 );
-    hillShape.lineTo( -b0/2, 50-Df-h0 );
-    const geometry = new THREE.ShapeGeometry( hillShape );
-    const hmaterial = new THREE.MeshBasicMaterial( { color: 0x8B4513});
-    const hmesh = new THREE.Mesh( geometry, hmaterial ) ;
-    hmesh.position.set(0, 0, 3);
-    this.scene.add( hmesh );
-  
-        // 文字をシーンに追加
-        const div = document.createElement('div');
-        div.className = 'label';
-        div.textContent = 'あああ';
-        // div.style.marginTop = '-1em';
-        const label = new CSS2DObject(div);
-        label.position.set(0, 11, 0);
-        label.name = 'font';
-        label.visible = true;
-        hmesh.add(label);
+    for(const obj of [this.gound0, this.gound1, this.gound2, this.gound3, this.body1, this.body2 ]){
+      if(obj !== null) {
+        this.scene.remove(obj);
+        obj = null;
+      }
+    }
 
-
-
+    // // 文字をシーンに追加
+    // const div = document.createElement('div');
+    // div.className = 'label';
+    // div.textContent = 'あああ';
+    // // div.style.marginTop = '-1em';
+    // const label = new CSS2DObject(div);
+    // label.position.set(0, 11, 0);
+    // label.name = 'font';
+    // label.visible = true;
+    // this.hmesh.add(label);
+   const hillShape = new THREE.Shape();
+   hillShape.moveTo( -b0/2, this.GL-Df );
+   hillShape.lineTo( b0/2, this.GL-Df );
+   hillShape.lineTo( b0/2, this.GL-Df-h0 );
+   hillShape.lineTo( -b0/2, this.GL-Df-h0 );
+   const geometry = new THREE.ShapeGeometry( hillShape );
+   const hmaterial = new THREE.MeshBasicMaterial( { color: 0x696969});
+   this.hmesh = new THREE.Mesh( geometry, hmaterial ) ;
+   this.hmesh.name = "hmesh";
+   this.hmesh.position.set(0, 0, 3);
+   this.scene.add( this.hmesh );  
 
     console.log('event');
 

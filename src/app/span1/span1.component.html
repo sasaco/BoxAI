@@ -6,15 +6,15 @@
         <h4>形状条件</h4>
         <div class="p">
             <div class="label"><label>内空幅</label></div>
-            <input class="input " id="b0" name="b0" type="number" [(ngModel)]="result.b0" (change)="onChange($event)"  />
+            <input class="input " id="b0" name="b0" type="number" step="100" [(ngModel)]="result.b0" (change)="onChange($event)"  />
         </div>
         <div class="p">
             <div class="label"><label>内空高</label></div>
-            <input class="input " id="h0" name="h0" type="number" [(ngModel)]="result.h0" (change)="onChange($event)" />
+            <input class="input " id="h0" name="h0" type="number" step="100" [(ngModel)]="result.h0" (change)="onChange($event)" />
         </div>
         <div class="p">
             <div class="label"><label>設計土被り</label></div>
-            <input class="input " id="Df" name="Df" type="number" [(ngModel)]="result.Df" (change)="onChange($event)" />
+            <input class="input " id="Df" name="Df" type="number" step="100" [(ngModel)]="result.Df" (change)="onChange($event)" />
         </div>
         <div class="p">
             <div class="label"><label>コンクリート強度</label></div>
