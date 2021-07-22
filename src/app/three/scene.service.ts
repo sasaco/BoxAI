@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import * as THREE from 'three';
 import { OrbitControls } from '@three-ts/orbit-controls';
+import { CSS2DRenderer, CSS2DObject } from './libs/CSS2DRenderer.js';
+import { ResultService } from '../result/result.service';
+import { Text } from 'troika-three-text'
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +15,7 @@ export class SceneService {
 
   // レンダラー
   private renderer!: THREE.WebGLRenderer;
+  private labelRenderer: CSS2DRenderer;
 
   // カメラ
   private camera!: THREE.OrthographicCamera;
@@ -22,7 +26,7 @@ export class SceneService {
   private GridHelper!: THREE.GridHelper;
 
   // 初期化
-  public constructor() {
+  public constructor(private result: ResultService) {
     // シーンを作成
     this.scene = new THREE.Scene();
     // シーンの背景を白に設定
@@ -68,7 +72,7 @@ export class SceneService {
 
   // コントロール
   public addControls() {
-    const controls = new OrbitControls(this.camera, this.renderer.domElement);
+    const controls = new OrbitControls(this.camera, this.labelRenderer.domElement);
     controls.enableRotate = false;
     controls.addEventListener('change', this.render);
   }
@@ -111,8 +115,15 @@ export class SceneService {
     this.renderer.setPixelRatio(deviceRatio);
     this.renderer.setSize(Width, Height);
     this.renderer.shadowMap.enabled = true;
+
+    this.labelRenderer = new CSS2DRenderer();
+    this.labelRenderer.setSize(Width, Height);
+    this.labelRenderer.domElement.style.position = 'absolute';
   }
 
+  public labelRendererDomElement(): Node {
+    return this.labelRenderer.domElement;
+  }
 
   // リサイズ
   public onResize(deviceRatio: number,
@@ -121,12 +132,14 @@ export class SceneService {
 
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(Width, Height);
+    this.labelRenderer.setSize(Width, Height);
     this.render();
   }
 
   // レンダリングする
   public render() {
     this.renderer.render(this.scene, this.camera);
+    this.labelRenderer.render(this.scene, this.camera);
   }
 
   // レンダリングのサイズを取得する
@@ -171,4 +184,91 @@ export class SceneService {
   }
 
 
+
+  ///////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////
+  public initialize(): void{
+    // GL の線 GL は y=50 の位置とする
+    const points = [
+      new THREE.Vector3( -100, 50, 0 ),
+      new THREE.Vector3( 100, 50, 0 ) 
+    ];
+    const material = new THREE.LineBasicMaterial({
+      color: 0x0000ff
+    });
+    const geometry = new THREE.BufferGeometry().setFromPoints( points );
+    const line = new THREE.Line( geometry, material );
+    this.scene.add( line );
+
+    // 画像を読み込む
+    var texture = new THREE.TextureLoader().load('./assets/img/t25.png',
+    (tex) => { // 読み込み完了時
+        // 縦横比を保って適当にリサイズ
+        const w = 25;
+        const h = tex.image.height/(tex.image.width/w);
+
+        // 平面
+        const geometry = new THREE.PlaneGeometry(1, 1);
+        const material = new THREE.MeshPhongMaterial( { map:texture } );
+        const plane = new THREE.Mesh( geometry, material );
+        plane.scale.set(w, h, 1);
+        plane.position.y = 50 + h/2;
+        plane.position.z = -1;
+        this.scene.add( plane );
+
+        // T-25 の文字
+        const myText = new Text();
+        this.scene.add(myText);
+        myText.text = 'T-25';
+        myText.fontSize = 5;
+        myText.position.z = 0;
+        myText.color = 0x000000;
+        myText.position.y = 50 + h;
+        myText.sync();
+        setTimeout(() => {
+          this.render();
+        }, 1000);
+    });
+
+    
+    this.changeData();
+  }
+  public changeData(): void {
+
+    const Df = this.result.Df;
+    const b0 = this.result.b0;
+    const h0 = this.result.h0;
+
+    // 内空の作成 ---------------------------------------------------------
+    const hillShape = new THREE.Shape();
+    const L = 8, H = 2;
+    hillShape.moveTo( -b0/2, 50-Df );
+    hillShape.lineTo( b0/2, 50-Df );
+    hillShape.lineTo( b0/2, 50-Df-h0 );
+    hillShape.lineTo( -b0/2, 50-Df-h0 );
+    const geometry = new THREE.ShapeGeometry( hillShape );
+    const hmaterial = new THREE.MeshBasicMaterial( { color: 0x8B4513});
+    const hmesh = new THREE.Mesh( geometry, hmaterial ) ;
+    hmesh.position.set(0, 0, 3);
+    this.scene.add( hmesh );
+  
+        // 文字をシーンに追加
+        const div = document.createElement('div');
+        div.className = 'label';
+        div.textContent = 'あああ';
+        // div.style.marginTop = '-1em';
+        const label = new CSS2DObject(div);
+        label.position.set(0, 11, 0);
+        label.name = 'font';
+        label.visible = true;
+        hmesh.add(label);
+
+
+
+
+    console.log('event');
+
+    this.render();
+  }
 }

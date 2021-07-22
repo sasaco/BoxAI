@@ -27,10 +27,16 @@ export class ThreeComponent implements AfterViewInit, OnDestroy {
     this.scene.OnInit(this.getAspectRatio(),
                       this.canvas,
                       devicePixelRatio,
-                      500,
-                      500);
+                      700,
+                      700);
+    // ラベルを表示する用のレンダラーを HTML に配置する
+    const element = this.scene.labelRendererDomElement();
+    const div = document.getElementById('myCanvas');        // ボタンを置きたい場所の手前の要素を取得
+    div.parentNode.insertBefore(element, div.nextSibling);  // ボタンを置きたい場所にaタグを追加
     // レンダリングする
     this.animate();
+
+    this.scene.initialize();
   }
 
   ngOnDestroy() {
@@ -65,8 +71,8 @@ export class ThreeComponent implements AfterViewInit, OnDestroy {
   @HostListener('window:resize', ['$event'])
   public onResize(event: Event) {
     this.scene.onResize(this.getAspectRatio(),
-                        window.innerWidth - 200,
-                        500);
+                        700,
+                        700);
   }
 
   private getAspectRatio(): number {

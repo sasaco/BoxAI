@@ -6,17 +6,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ThreeComponent } from './three/three.component';
 import { Span1Component } from './span1/span1.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ResultComponent } from './result/result.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ThreeComponent,
-    Span1Component
+    Span1Component,
+    ResultComponent
   ],
   imports: [
     FormsModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

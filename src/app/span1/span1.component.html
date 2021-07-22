@@ -1,127 +1,96 @@
-<div>
-    <fieldset>
-        <legend> AIの予測結果</legend>
-        <table>
-            <tr>
-                <td>上床版</td>
-                <td>{{tb1}}</td>
-            </tr>
-            <tr>
-                <td>側壁</td>
-                <td>{{tw1}}</td>
-            </tr>
-            <tr>
-                <td>下床版</td>
-                <td>{{tb1}}</td>
-            </tr>
-            <tr>
-                <td>ハンチ1</td>
-                <td>{{a1}}×{{b1}}</td>
-            </tr>
-            <tr>
-                <td>ハンチ2</td>
-                <td>{{c1}}×{{d1}}</td>
-            </tr>
-        </table>
-    </fieldset>
-</div>
-
+<!-- 
 <button (click)="doForecast()">予測</button>
-
+ -->
 <div class="right-contents">
-    <div>
+    <div class="spled0">
         <h4>形状条件</h4>
-        <div>
-            <label for="name">内空幅</label>
-            <input id="b0" name="b0" type="number" [(ngModel)]="b0" />
+        <div class="p">
+            <div class="label"><label>内空幅</label></div>
+            <input class="input " id="b0" name="b0" type="number" [(ngModel)]="result.b0" (change)="onChange($event)"  />
         </div>
-        <div>
-            <label for="name">内空高</label>
-            <input id="h0" name="h0" type="number" [(ngModel)]="h0" />
+        <div class="p">
+            <div class="label"><label>内空高</label></div>
+            <input class="input " id="h0" name="h0" type="number" [(ngModel)]="result.h0" (change)="onChange($event)" />
         </div>
-        <div>
-            <label for="name">設計土被り</label>
-            <input id="Df" name="Df" type="number" [(ngModel)]="Df" />
+        <div class="p">
+            <div class="label"><label>設計土被り</label></div>
+            <input class="input " id="Df" name="Df" type="number" [(ngModel)]="result.Df" (change)="onChange($event)" />
         </div>
-    </div>
-    <div>
-        <h4>材料条件</h4>
-        <div>
-            <label for="name">コンクリート強度</label>
-            <input id="fck" name="fck" type="number" [(ngModel)]="fck" />
+        <div class="p">
+            <div class="label"><label>コンクリート強度</label></div>
+            <input class="input " id="fck" name="fck" type="number" [(ngModel)]="result.fck" (change)="onChange($event)" />
         </div>
-        <div>
-            <label for="name">環境条件</label>
-            <input id="condition" name="condition" type="text" [(ngModel)]="condition" />
-        </div>
-    </div>
-    <div>
-        <h4>荷重条件</h4>
-        <div>
-            <label for="name">地層①の重量</label>
-            <input id="coverSoilWeight" name="coverSoilWeight" type="number" [(ngModel)]="coverSoilWeight" />
-        </div>
-        <div>
-            <label for="name">上載荷重</label>
-            <input id="surfaceLoad" name="surfaceLoad" type="number" [(ngModel)]="surfaceLoad" />
-        </div>
-        <div>
-            <label for="name">温度</label>
-            <input id="temperature" name="temperature" type="number" [(ngModel)]="temperature" />
+        <div class="h">
+            <div class="label1"><label>環境条件</label></div>
+            <ul class="heroes">
+                <li *ngFor="let con of CONDITIONS"
+                    [class.selected]="con === result.condition"
+                    (click)="conSelect(con)">
+                    {{con}}
+                </li>
+            </ul>
         </div>
     </div>
-    <div>
+    <div class="spled1">
         <h4>地層条件</h4>
-        <div>
-            <label for="name">1層目 湿潤重量</label>
-            <input id="r1" name="r1" type="number" [(ngModel)]="r1" />
+        <div class="p">
+            <div class="label"><label>地層①の重量</label></div>
+            <input class="input " id="coverSoilWeight" name="coverSoilWeight" type="number" [(ngModel)]="result.coverSoilWeight" (change)="onChange($event)" />
         </div>
-        <div>
-            <label for="name">高水位</label>
-            <input id="highWaterDepth" name="highWaterDepth" type="number" [(ngModel)]="highWaterDepth" />
-        </div>
-        <div>
-            <label for="name">低水位</label>
-            <input id="lowWaterDepth" name="lowWaterDepth" type="number" [(ngModel)]="lowWaterDepth" />
+        <div class="p">
+            <div class="label"><label>1層目 湿潤重量</label></div>
+            <input class="input " id="r1" name="r1" type="number" [(ngModel)]="result.r1" (change)="onChange($event)" />
         </div>
     </div>
 
-    <div>
+    <div class="spled2">
         <h4>2層目条件（上半分）</h4>
         <div>
-            <label for="name">土質区分</label>
-            <input id="type2" name="type2" type="text" [(ngModel)]="type2" />
+            <div class="label1"><label>土質区分</label></div>
+            <ul class="heroes">
+                <li *ngFor="let typ of TYPE2s"
+                    [class.selected]="typ === result.type2"
+                    (click)="type2Select(typ)">
+                    {{typ}}
+                </li>
+            </ul>
         </div>
-        <div>
-            <label for="name">湿潤重量</label>
-            <input id="r2" name="r2" type="number" [(ngModel)]="r2" />
+        <div class="p">
+            <div class="label"><label>湿潤重量</label></div>
+            <input class="input " id="r2" name="r2" type="number" [(ngModel)]="result.r2" (change)="onChange($event)" />
         </div>
-        <div>
-            <label for="name">弾性係数</label>
-            <input id="E02" name="E02" type="number" [(ngModel)]="E02" />
+        <div class="p">
+            <div class="label"><label>弾性係数</label></div>
+            <input class="input " id="E02" name="E02" type="number" [(ngModel)]="result.E02" (change)="onChange($event)" />
         </div>
-        <div>
-            <label for="name">土圧係数</label>
-            <input id="Ko2" name="Ko2" type="number" [(ngModel)]="Ko2" />
+        <div class="p">
+            <div class="label"><label>土圧係数</label></div>
+            <input class="input " id="Ko2" name="Ko2" type="number" [(ngModel)]="result.Ko2" (change)="onChange($event)" />
         </div>
     </div>
-    <div>
+    <div class="spled2">
         <h4>3層目条件（下半分）</h4>
         <div>
-            <label for="name">土質区分</label>
-            <input id="type3" name="type3" type="text" [(ngModel)]="type3" />
+            <div class="label1"><label>土質区分</label></div>
+            <ul class="heroes">
+                <li *ngFor="let typ of TYPE3s"
+                    [class.selected]="typ === result.type3"
+                    (click)="type3Select(typ)">
+                    {{typ}}
+                </li>
+            </ul>
         </div>
-        <div>
-            <label for="name">湿潤重量</label>
-            <input id="r3" name="r3" type="number" [(ngModel)]="r3" />
+        <div class="p">
+            <div class="label"><label>湿潤重量</label></div>
+            <input class="input " id="r3" name="r3" type="number" [(ngModel)]="result.r3" (change)="onChange($event)" />
         </div>
-        <div>
-            <label for="name">弾性係数</label>
-            <input id="E03" name="E03" type="number" [(ngModel)]="E03" />
+        <div class="p">
+            <div class="label"><label>弾性係数</label></div>
+            <input class="input " id="E03" name="E03" type="number" [(ngModel)]="result.E03" (change)="onChange($event)" />
         </div>
-        <div>
-            <label for="name">土圧係数</label>
-            <input id="Ko3" name="Ko3" type="number" [(ngModel)]="Ko3" />
+        <div class="p">
+            <div class="label"><label>土圧係数</label></div>
+            <input class="input " id="Ko3" name="Ko3" type="number" [(ngModel)]="result.Ko3" (change)="onChange($event)" />
         </div>
     </div>
 </div>

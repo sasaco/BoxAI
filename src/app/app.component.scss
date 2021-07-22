@@ -51,14 +51,18 @@ $border-color: #428bca; // ボーダーライン
     display: inline-block;
     overflow: hidden;
 }
+.resultArea{
+    margin: 20px;
+}
 .threeArea{
-    width: 500px;
-    height: 500px;
+    margin: 20px;
+    width: 700px;
+    height: 700px;
     z-index: 0;
     float: left;
 }
 .inputArea{
-    margin-left: 10px;
+    margin: 20px 0 0 20px;
     z-index: 1;
     float: left;
 }
