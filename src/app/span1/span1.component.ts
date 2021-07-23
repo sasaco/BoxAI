@@ -19,11 +19,12 @@ export class Span1Component {
     private scene: SceneService) {
       this.loadModel();
   }
-
+  
   // モデルを読み込む
   public async loadModel(): Promise<void> {
     this.model = await tf.loadLayersModel(this.MODEL_PATH);
     console.log(this.model.summary());
+    this.onChange(null);
   }
 
   // 環境条件
@@ -75,7 +76,7 @@ export class Span1Component {
   }
 
 
-  public async doForecast(): Promise<void> {
+  private async doForecast(): Promise<void> {
 
     this.calcrateFlg = true;
 
