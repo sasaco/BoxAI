@@ -16,6 +16,7 @@ export class ResultService {
   public b0 = 5000;
   public h0 = 5000;
   public fck = 25;
+  public ds = 50;
   public condition = '一般の環境'; // 環境条件
 
   public coverSoilWeight = 18; // 被り土重量

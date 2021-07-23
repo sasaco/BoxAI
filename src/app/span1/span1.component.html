@@ -20,6 +20,10 @@
             <div class="label"><label>コンクリート強度</label></div>
             <input class="input " id="fck" name="fck" type="number" [(ngModel)]="result.fck" (change)="onChange($event)" />
         </div>
+        <div class="p">
+            <div class="label"><label>鉄筋かぶり</label></div>
+            <input class="input " id="ds" name="ds" type="number" [(ngModel)]="result.ds" (change)="onChange($event)" />
+        </div>
         <div class="h">
             <div class="label1"><label>環境条件</label></div>
             <ul class="heroes">
