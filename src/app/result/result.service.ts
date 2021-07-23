@@ -41,42 +41,6 @@ export class ResultService {
     const _type2 = (this.type2 === '砂質土') ? 0 : 1;
     const _type3 = (this.type3 === '砂質土') ? 0 : 1;
 
-    //正規化処理
-    const max_value = [
-      3,
-      10000,
-      20000,
-      20000,
-      80,
-      3,
-      20,
-      500,
-      35000,
-      35000,
-      35,
-      20,
-      1,
-      20,
-      51000,
-      0.8,
-      1,
-      20,
-      51000,
-      0.8,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ]
-
-
     const result = [
       1,
       this.Df,
@@ -85,10 +49,7 @@ export class ResultService {
       this.fck,
       _condition,
       this.coverSoilWeight,
-      0,
-      0,
-      0,
-      0,
+      this.ds,
       this.r1,
       _type2,
       this.r2,
@@ -97,21 +58,29 @@ export class ResultService {
       _type3,
       this.r3,
       this.E03,
-      this.Ko3,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
+      this.Ko3
     ];
 
-
+    //正規化処理
+    const max_value = [
+      3,      // result_max
+      10000,  // Df
+      20000,  // b0
+      20000,  // h0
+      80,     // fck
+      3,      // condition
+      20,     // coverSoilWeight
+      100,    // ds
+      20,     // r1
+      1,      // type2
+      20,     // r2
+      51000,  // E02
+      0.8,    // Ko2
+      1,      // type3 
+      20,     // r3
+      51000,  // E03
+      0.8     // Ko3
+    ]
     for (let i = 0; i < result.length; i++) {
       result[i] /= max_value[i];
     }
@@ -121,24 +90,14 @@ export class ResultService {
 
 
   // 計算結果を読み込む 
-  public loadResultData(result: any[]): boolean {
+  public loadResultData(result: any[]): void {
 
-    
     // 答え(predictions) は正規化を元に戻す
-    const predictions = [];
-    //最大値と最小値の入力（予測値）
-    const maxValue1 = [5000, 5000, 5000, 400, 400, 400, 400];
+    const maxValue1 = [5000, 5000, 5000];
 
-    for (let i = 0; i < result.length; i++) {
-      const a: number = this.toNumber(result[i]);
-      predictions.push(maxValue1[i] * a);
-    }
-
-    this.tu1 = result[0] / maxValue1[0];
-    this.tw1 = result[1] / maxValue1[1];
-    this.tb1 = result[2] / maxValue1[2];
-
-    return true;
+    this.tu1 = Math.round(result[0] * maxValue1[0] /10)*10;
+    this.tw1 = Math.round(result[1] * maxValue1[1] /10)*10;
+    this.tb1 = Math.round(result[2] * maxValue1[2] /10)*10;
   }
 
 
