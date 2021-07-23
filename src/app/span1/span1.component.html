@@ -69,7 +69,7 @@
         </div>
         <div class="p">
             <div class="label"><label>土圧係数</label></div>
-            <input class="input " id="Ko2" name="Ko2" type="number" [(ngModel)]="result.Ko2" (change)="onChange($event)" />
+            <input class="input " id="Ko2" name="Ko2" type="number" step="0.1" [(ngModel)]="result.Ko2" (change)="onChange($event)" />
         </div>
     </div>
     <div class="spled2">
@@ -94,7 +94,7 @@
         </div>
         <div class="p">
             <div class="label"><label>土圧係数</label></div>
-            <input class="input " id="Ko3" name="Ko3" type="number" [(ngModel)]="result.Ko3" (change)="onChange($event)" />
+            <input class="input " id="Ko3" name="Ko3" type="number" step="0.1" [(ngModel)]="result.Ko3" (change)="onChange($event)" />
         </div>
     </div>
 </div>

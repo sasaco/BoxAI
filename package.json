@@ -1,10 +1,10 @@
 {
-  "name": "three-test",
-  "version": "0.0.0",
+  "name": "box-ai",
+  "version": "1.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod --base-href \"https://sasaco.github.io/BoxAI/\" && angular-cli-ghpages",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -24,6 +24,7 @@
     "@tensorflow/tfjs": "^3.8.0",
     "@three-ts/orbit-controls": "^1.4.7",
     "@types/three": "^0.130.0",
+    "angular-cli-ghpages": "^1.0.0-rc.2",
     "rxjs": "~6.6.0",
     "three": "^0.130.1",
     "troika-three-text": "^0.42.0",
